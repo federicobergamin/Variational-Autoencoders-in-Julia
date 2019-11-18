@@ -53,44 +53,21 @@ function load_binarized_mnist(batch_size, flatten)
     # flatten
     if flatten
         # we want to reshape them into (L, BS)
+        # training set
         x_train = train_imgs
-        #@show x_train[:,2]
-        #C =  findall(x->x==1.0, vec(train_imgs[:,2]))
-        #@show C
-        #@show(size(x_train))
-        #x_train_batch = batchview(x_train, batch_size)
-        #@show(size(x_train_batch))
-
+        # validation set
         x_valid = valid_imgs
-        #@show(size(x_valid))
-        #x_valid = batchview(x_valid, batch_size)
-        #@show(size(x_valid))
-
+        # test set
         x_test = test_imgs
-        #@show(size(x_test))
-        #x_test = batchview(x_test, batch_size)
-        #@show(size(x_test))
 
     else
-        # x_train = transpose(train_imgs)
+        # we want to return the images (H,W,C,n) where n = |set|
+        # training set
         x_train = reshape(train_imgs, 28, 28, 1, size(train_imgs, 2))
-        #C = findall(x->x==1.0, vec(x_train[:,:,:,2]))
-        #@show C
-        #@show x_train[:,:,:,2]
-        #x_train_batch = batchview(x_train, batch_size)
-        #@show(size(x_train_batch))
-
-        # x_valid = transpose(valid_imgs)
+        # validation set
         x_valid = reshape(valid_imgs, 28, 28, 1, size(valid_imgs, 2))
-        #@show(size(x_valid))
-        #x_valid = batchview(x_valid, batch_size)
-        #@show(size(x_valid))
-
-        # x_test = transpose(test_imgs)
+        # test set
         x_test = reshape(test_imgs, 28, 28, 1, size(test_imgs, 2))
-        #@show(size(x_test))
-        #x_test = batchview(x_test, batch_size)
-        #@show(size(x_test))
 
     end
 
@@ -103,9 +80,9 @@ end
 
 ## function to load MNIST (credit: Jesse Bettencourt)
 function loadMNIST(batch_size)
-    # we use MLDataUtils LabelEnc for the one-hot-conversion (in the VAE we do not care about labels)
+    # we use MLDataUtils LabelEnc for the one-hot-conversion
     onehot(labels_raw) =  convertlabel(LabelEnc.OneOfK, labels_raw, LabelEnc.NativeLabels(collect(0:9)))
-    # load MNIST
+    # load MNIST from the library 
     imgs, labels_raw = MNIST.traindata();
     # process the images into (H,W,C,BS) batches
     @show(size(imgs))

@@ -3,6 +3,9 @@
 ## (https://github.com/jessebett/model-zoo/blob/master/vision/mnist/vae.jl)
 ## I try to do mine in a different way
 
+## I am using the original Binarized MNIST
+## you can download it from http://www.dmi.usherb.ca/~larocheh/mlpython/_modules/datasets/binarized_mnist.html
+
 using Flux, Statistics
 using Flux: Tracker, throttle, params, binarycrossentropy, gradient, @epochs
 #flux function for update parameters
@@ -60,6 +63,7 @@ function analytic_kl(mu, log_var)
     return kl
 end
 
+## todo: I have to understand why the approaximate KL does not work
 function _kl_divergence(z, mu_q, log_var_q, mu_p = nothing, log_var_p = nothing)
     # instead of computing it analytically, we can estimate it
     # using monte carlo methods
@@ -103,8 +107,6 @@ get_sample() = decoder(randn(Float32,latent_dim))
 function compute_loss(_data::Matrix)
     # we should pass our data into the encoder
     (_mu, _log_var) = encoder(_data)
-    #@show size(_mu)
-    #@show size(_log_var)
     # then we use the reparametrization trick to sample z
     _z = reparametrization_trick.(_mu, _log_var)
     # we pass the z through the decoder to get the mean for each pixel
