@@ -6,10 +6,10 @@ I wanted to explore Julia programming language (after having used it in a course
 I tried to run it more than once, but it always stops because of a NaN loss. I used a latent space of dimension 3 and every MLP has one hidden layer with 400 hidden units.
 In the following I report some samples from the prior and some reconstructions:
 
-### Samples from the prior distribution
+### Samples from the prior distribution at epoch 78
 ![alt text](readme_imgs/samples_from_random_epoch_78.png "Prior distribution")
 
-### Reconstructions
+### Reconstructions at epoch 78
 ![alt text](readme_imgs/original_epoch_78.png "Prior distribution")
 ![alt text](readme_imgs/reconstruction_epoch_78.png "Prior distribution")
 
