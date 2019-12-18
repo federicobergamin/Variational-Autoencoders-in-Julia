@@ -9,9 +9,8 @@
 ## I am not passing a directory to the loading function (possibly a TODO)
 
 using Flux, Statistics
-using Flux: Tracker, throttle, params, binarycrossentropy, gradient, @epochs, testmode!, glorot_uniform
+using Flux: throttle, params, binarycrossentropy, gradient, @epochs, glorot_uniform
 #flux function for update parameters
-using Flux.Tracker: update!
 using Base.Iterators: partition
 using Juno: @progress
 using MLDataUtils
@@ -151,7 +150,7 @@ function train!()
             j += 1
             #we have to compute the loss of this
             (loss, _recon_err, _kl) = compute_loss(data)
-            grad = Flux.Tracker.gradient(()-> loss/size(data,2), ps)
+            grad = gradient(()-> loss/size(data,2), ps)
             update!(opt, ps, grad)
             tot_recon += _recon_err
             tot_kl += sum(_kl)
@@ -164,7 +163,7 @@ function train!()
 
         # ## TODO: understand how to sample during training, becuase at the moment it gets problems
         # (h, mu, log_var, decoder) = mapleaves(Flux.Tracker.data, ps)
-        testmode!((h, mu, log_var, decoder), true)
+        # testmode!((h, mu, log_var, decoder), true)
 
         sample = img.([get_sample() for i = 1:64])
         @show(size(sample))
@@ -194,8 +193,8 @@ train!()
 #   @info "Epoch $i"
 #   Flux.train!(loss, ps, zip(x_train_batch), opt, cb=evalcb)
 # end
-(h, mu, log_var, decoder) = mapleaves(Flux.Tracker.data, (h, mu, log_var, decoder))
-testmode!((h, mu, log_var, decoder), true)
+# (h, mu, log_var, decoder) = mapleaves(Flux.Tracker.data, (h, mu, log_var, decoder))
+# testmode!((h, mu, log_var, decoder), true)
 
 sample = img.([get_sample() for i = 1:64])
 @show(size(sample))

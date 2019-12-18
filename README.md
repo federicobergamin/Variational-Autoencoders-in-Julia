@@ -1,4 +1,4 @@
-## Variational Autoencoders in Julia [still in progress, not working properly]
+## Variational Autoencoders in Julia [still in progress, not working properly, using Flux v. 0.8.3]
 
 Personal implementation of the paper *"AutoEncoding Variational Bayes" by Kingma, D. P., & Welling, M. (2013)* in Julia.
 I wanted to explore Julia programming language (after having used it in a course) and I tried to implement VAEs using it.
