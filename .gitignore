@@ -2,3 +2,8 @@
 .DS_Store
 Original_MNIST_binarized/
 misc.jl
+samples/
+original2.png
+reconstructions/
+check_while_load_fin.png
+check_while_load_fin2.png

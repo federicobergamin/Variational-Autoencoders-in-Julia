@@ -17,7 +17,7 @@ function load_binarized_mnist(batch_size, flatten)
     train_imgs = readlines(file)
     #C =  findall(x->x=="1", vec(train_imgs[2,:]))
     #@show C
-    train_imgs = [parse.(Float32, split(train_imgs[i]," ")) for i in 1:size(train_imgs, 1)]
+    train_imgs = [parse.(Float64, split(train_imgs[i]," ")) for i in 1:size(train_imgs, 1)]
     example = train_imgs[1]
     save("check_while_load_fin.png", img(example))
     #C =  findall(x->x==1.0, vec(train_imgs[2,:][1]))
@@ -34,7 +34,7 @@ function load_binarized_mnist(batch_size, flatten)
     # valid test
     file = open("Original_MNIST_binarized/binarized_mnist_valid.amat", "r")
     valid_imgs = readlines(file)
-    valid_imgs = [parse.(Float32, split(valid_imgs[i]," ")) for i in 1:size(valid_imgs, 1)]
+    valid_imgs = [parse.(Float64, split(valid_imgs[i]," ")) for i in 1:size(valid_imgs, 1)]
     valid_imgs = hcat(valid_imgs...)
     #valid_imgs = permutedims(reshape(hcat(valid_imgs...), (length(valid_imgs[1]), length(valid_imgs))))
     #valid_imgs = permutedims(reshape(hcat(valid_imgs...), (length(valid_imgs), length(valid_imgs[1]))))
@@ -43,7 +43,7 @@ function load_binarized_mnist(batch_size, flatten)
     # test set
     file = open("Original_MNIST_binarized/binarized_mnist_test.amat", "r")
     test_imgs = readlines(file)
-    test_imgs = [parse.(Float32, split(test_imgs[i]," ")) for i in 1:size(test_imgs, 1)]
+    test_imgs = [parse.(Float64, split(test_imgs[i]," ")) for i in 1:size(test_imgs, 1)]
     test_imgs = hcat(test_imgs...)
     #test_imgs = permutedims(reshape(hcat(test_imgs...), (length(test_imgs[1]), length(test_imgs))))
     #test_imgs = permutedims(reshape(hcat(test_imgs...), (length(test_imgs), length(test_imgs[1]))))
@@ -82,7 +82,7 @@ end
 function loadMNIST(batch_size)
     # we use MLDataUtils LabelEnc for the one-hot-conversion
     onehot(labels_raw) =  convertlabel(LabelEnc.OneOfK, labels_raw, LabelEnc.NativeLabels(collect(0:9)))
-    # load MNIST from the library 
+    # load MNIST from the library
     imgs, labels_raw = MNIST.traindata();
     # process the images into (H,W,C,BS) batches
     @show(size(imgs))
