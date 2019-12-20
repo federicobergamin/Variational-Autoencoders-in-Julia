@@ -23,7 +23,7 @@ img(x) = Gray.(permutedims(reshape(x, 28, 28)))
 function log_standard_gaussian(x)
     #return torch.sum(-0.5 * math.log(2 * math.pi) - x ** 2 / 2, dim=-1)
     #log_pdf =  -0.5f0 * log(2 * pi) .- x.^2 / 2
-    log_pdf =  @. -0.5f0 * log(2 * pi) - x^2 / 2
+    log_pdf =  @. -0.5 * log(2. * pi) - x^2 / 2.
     #@show(A)
     # alternatively, we can do
     #Norm = Normal(0)
@@ -42,7 +42,7 @@ end
 # end
 
 function log_gaussian(x, mu, log_var)
-    log_pdf = - 0.5 * log(2 * pi) .- log_var / 2 - (x .- mu)^2 / (2 * exp.(log_var))
+    log_pdf = - 0.5 * log(2. * pi) .- log_var / 2. - (x .- mu)^2 / (2. * exp.(log_var))
     #log_pdf = @. - 0.5 * log(2 * pi) - (log_var + eps(Float32))1 / 2 - (x - mu)^2 / (2 * exp(log_var))
     # print('Size log_pdf:', log_pdf.shape)
     return log_pdf
@@ -57,7 +57,7 @@ end
 # end  THIS FUNCTION IS SUPER SLOW, MY GOODNESS! USE THE ONE PROVIDE BY FLUX
 
 function reparametrization_trick(mu, log_var)
-    z = mu + rand(Float32) * exp(log_var * 0.5)
+    z = mu + rand(Float64) * exp(log_var * 0.5)
     return z
 end
 
@@ -105,7 +105,7 @@ decoder = Chain(Dense(latent_dim, hidden_dim, relu, initW = glorot_uniform, init
 
 # we define the
 # we have to define a method to samples
-get_sample() = decoder(randn(Float32,latent_dim))
+get_sample() = decoder(randn(Float64,latent_dim))
 #function get_sample()
 #    testmode!(decoder)
 #    return decoder(randn(Float32,latent_dim))
